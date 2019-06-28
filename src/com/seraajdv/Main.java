@@ -5,6 +5,7 @@ import com.seraajdv.model.Datasource;
 import com.seraajdv.model.SongArtist;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
 
@@ -49,6 +50,22 @@ public class Main {
         System.out.println("Number of songs is: " + count);
 
         datasource.createViewForSongArtists();
+
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter a song title: ");
+        String title = sc.nextLine();
+
+        songArtists = datasource.querySongInfoView(title);
+        if(songArtists.isEmpty()) {
+            System.out.println("Couldn't find the artist for the song");
+            return;
+        }
+
+        for(SongArtist artist : songArtists) {
+            System.out.println("FROM VIEW - Artist name = " + artist.getArtistName() +
+                    " Album name = " + artist.getAlbumName() +
+                    " Track number = " + artist.getTrack());
+        }
 
         datasource.close();
     }
